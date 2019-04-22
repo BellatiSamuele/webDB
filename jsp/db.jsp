@@ -2,23 +2,15 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*,java.text.*"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Luogo giudici XFactor</title>
+        <title>Elenco giudici XFactor</title>
     </head>
     <body>
-     <% 
-     if(request.getParameter("luogo")==null || request.getParameter("luogo").isEmpty()){
-      %>
-       <h1>Non hai inserito nessun giudice</h1>
-      <%
-        return;
-      } 
-      %>
-
-      <h1>Elenco dei giudici di <%= request.getParameter("luogo") %></h1>
-      <p><a href=../html/home.html>Torna alla Home</a>
+        <h1>Elenco dei giudici di XFactor</h1>
+        <p><a href=../html/home.html>Torna indietro</a>
         <% 
             
             String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=XFactor;user=bellati.samuele;password=xxx123#";
@@ -29,12 +21,9 @@
 			
 			Statement stmt = connection.createStatement();
 
-            String luogo = request.getParameter("luogo");
-
-			String sql = "SELECT * FROM Giudice where LuogoDiNascita = ?";
-			PreparedStatement ps1 = connection.prepareStatement(sql);
-			ps1.setString(1, luogo);
-			ResultSet rs = ps1.executeQuery();
+			String sql = "SELECT * FROM Giudice order by Cognome";
+			
+			ResultSet rs = stmt.executeQuery(sql);
 			
 			out.print("<table>");
 			
@@ -45,11 +34,11 @@
 				String Nome = rs.getString("Nome");
 				String Cognome = rs.getString("Cognome");
                 
-                out.print("<tr><td>" + Cognome + "</td><td>" + Nome + "</td></tr>");
+                out.print("<tr style='border: 1px solid black;'><td style='border: 1px solid black;'>" + Cognome + "</td><td style='border: 1px solid black;'>" + Nome + "</td></tr>");
 
 	        }
 	        
-	        out.print("</table>");
+	        
 	        
 	        rs.close();
 	        
