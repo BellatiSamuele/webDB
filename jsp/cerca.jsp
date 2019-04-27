@@ -10,35 +10,47 @@
     </head>
     <body>
         <% 
-            String text = request.getParameter("text");
-            String tag = request.getParameter("tag");
             
             String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=bellati.samuele;user=bellati.samuele;password=xxx123#";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             Connection connection = DriverManager.getConnection(connectionUrl);
-			
-			Statement stmt = connection.createStatement();
 
-			String sql = "SELECT * FROM dbo.Utente WHERE Username = '" + request.getParameter("text") + "' ORDER BY " + request.getParameter("tag") + "";
-			ResultSet rs = stmt.executeQuery(sql);
+			String text = request.getParameter("text");
+            
+            String sqlRicerca = "SELECT * FROM Utente WHERE " + request.getParameter("tag") + " LIKE ?";
+            
+            PreparedStatement stmtRicerca = connection.prepareStatement(sqlRicerca);
+            stmtRicerca.setString(1, ricerca + "%");
+            ResultSet rsRicerca = stmtRicerca.executeQuery();
 			
-			out.print("<table>");
+			%>
 			
-			out.print("<tr><th align=left>Username</th>);
-			
-    		while(rs.next()){
-
-				String Nome = rs.getString("Nome");
-                
-                out.print("<tr style='border: 1px solid black;'><td style='border: 1px solid black;'>" + Nome + "</td></tr>");
-                
-	        }
+			<table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% while(rsRicerca.next()){ %>
+                <tr>
+                    <td> <%= rsRicerca.getString("Nome") %> </td>
+                    <td> <%= rsRicerca.getString("Cognome") %> </td>
+                    <td> <%= rsRicerca.getString("Email") %> </td>
+                    <td> <%= rsRicerca.getString("Username") %> </td>
+                  </tr>
+                  <% }%>
+                </tbody>
+              </table>
+              
+              <%
 	        
-	        out.print(sql);
-	        
-	        rs.close();
+	        rsRicerca.close();
 	        
 	        connection.close();
         

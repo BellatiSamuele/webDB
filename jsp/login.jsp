@@ -18,7 +18,7 @@
 
         <%
         try{
-            String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=XFactor;user=bellati.samuele;password=xxx123#";
+            String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=bellati.samuele;user=bellati.samuele;password=xxx123#";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
@@ -29,7 +29,7 @@
 			// ' or 1=1 --
 			
 			//preparedStatement
-			String sql = "SELECT * FROM Sblendorio WHERE Username = '" + request.getParameter("username") + "' AND Password = '" + request.getParameter("psw") + "' ";
+			String sql = "SELECT * FROM Utente WHERE Username = '" + request.getParameter("username") + "' AND Password = '" + request.getParameter("psw") + "' ";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if(rs.next()){

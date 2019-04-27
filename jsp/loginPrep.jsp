@@ -16,7 +16,7 @@
      String password = request.getParameter("psw");
      %>
         <% 
-            String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=XFactor;user=bellati.samuele;password=xxx123#";
+            String connectionUrl = "jdbc:sqlserver://213.140.22.237\\SQLEXPRESS:1433;databaseName=bellati.samuele;user=bellati.samuele;password=xxx123#";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
@@ -28,7 +28,7 @@
 			//String sql = "INSERT INTO Giudice VALUES ( ' " +  nome + " ')" ;
 			
 			//preparedStatement
-			String sql = "SELECT * FROM Sblendorio WHERE Username = ? AND Password = ?";
+			String sql = "SELECT * FROM Utente WHERE Username = ? AND Password = ?";
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			
 			pstmt.setString(1, username);
