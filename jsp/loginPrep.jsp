@@ -22,11 +22,6 @@
 
             Connection connection = DriverManager.getConnection(connectionUrl);
 			
-			//Statement stmt = connection.createStatement();
-            
-			// ' or 1=1 --
-			//String sql = "INSERT INTO Giudice VALUES ( ' " +  nome + " ')" ;
-			
 			//preparedStatement
 			String sql = "SELECT * FROM Utente WHERE Username = ? AND Password = ?";
 			PreparedStatement pstmt = connection.prepareStatement(sql);
